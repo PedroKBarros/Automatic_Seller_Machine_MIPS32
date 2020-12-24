@@ -103,6 +103,33 @@ result:
 		move $a0, $t2
 		syscall
 
+		li $v0, 4
+		la $a0, pula
+		syscall
+
+		#Convertendo o valor do produto selecionado para um valor com parte inteira e fracionária:
+		li $t3, 100
+		div $t9, $t3
+		mflo $t1
+		mfhi $t2
+
+		#Apresentando valor do produto selecionado:
+		li $v0, 4
+		la $a0, msg2
+		syscall
+
+		li $v0, 1
+		move $a0, $t1
+		syscall
+
+		li $v0, 4
+		la $a0, virgula
+		syscall
+
+		li $v0, 1
+		move $a0, $t2
+		syscall
+
 		j exit
 
 exception:
