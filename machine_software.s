@@ -8,6 +8,20 @@ pula:   .asciiz "\n"
 .text
         .globl main
 main:
+		li $s0, 1
+		li $s1, 1
+		li $s2, 1
+		li $s3, 1
+		li $s4, 1
+		li $s5, 1
+		li $s6, 1
+		li $s7, 1
+		li $t9, 30
+		li $t3, 100
+		mult $t9, $t3
+		mflo $t9
+
+		
 		#Calculando valor em reais de notas:
         
 		li $t3, 20              #Carregando operador imediato 20 em registrador $t3 para representar as notas de 20 reais
@@ -54,3 +68,31 @@ main:
 		mult $s7, $t3			#Multiplicando valor em $s7, que contém a qtd de moedas de R$ 0,10, por $t3
 		mflo $t2				#Movendo o resultado da multiplicação para o registrador $t2
 		add $t1, $t1, $t2		#Adicionando ao valor anterior de $t1, o valor de $t2
+		
+		beq $t1, $t9, result	#verificando se o valor inserido pelo usuário ($t1) é igual ao valor do produto selecionado ($t9)
+		slt $t6, $t9, $t1		#Verificando se o valor do produto selecionado ($t9) é menor do que o valor inserido pelo usuário ($t1)
+		beq $t6, $0, exception	#Caso, o registrador $t6 tenha valor 0, significa que $t1 é menor do que $t9. Nesse caso, ocorrerá o desvio para a label 'exception' para tratamento dessa exceção
+
+result:
+		#Fluxo para apresentação da saída padrão
+
+		li $t0, 0
+
+		li $v0, 4
+		la $a0, msg1
+		syscall
+		li $v0, 1
+		move $a0, $t1
+		syscall
+		j exit
+
+exception:
+		#Fluxo para tratamento da exceção de valor inserido menor do que valor do produto
+
+		li $t0, 1
+
+		li $v0, 4
+		la $a0, msg4
+		syscall
+
+exit:
