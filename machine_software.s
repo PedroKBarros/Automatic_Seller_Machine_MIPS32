@@ -1,6 +1,6 @@
 .data
 msg1:   .asciiz "Valor pago: R$"
-msg2:   .asciiz "Valor do produto selecionado R$"
+msg2:   .asciiz "Valor do produto selecionado: R$"
 msg3:   .asciiz "Troco: R$"
 msg4:   .asciiz "Valor insuficiente para compra"
 pula:   .asciiz "\n"
@@ -80,6 +80,9 @@ result:
 
 		li $t0, 0 #Carregando 0 no registrador $t0 para indicar que o valor inserido é suficiente para pagamento do produto selecionado
 		
+		#Calculando troco:
+		sub $t4, $t1, $t9
+
 		#Convertendo o valor inserido para um valor com parte inteira e fracionária:
 		li $t3, 100
 		div $t1, $t3
@@ -116,6 +119,33 @@ result:
 		#Apresentando valor do produto selecionado:
 		li $v0, 4
 		la $a0, msg2
+		syscall
+
+		li $v0, 1
+		move $a0, $t1
+		syscall
+
+		li $v0, 4
+		la $a0, virgula
+		syscall
+
+		li $v0, 1
+		move $a0, $t2
+		syscall
+
+		li $v0, 4
+		la $a0, pula
+		syscall
+
+		#Convertendo o valor do troco para um valor com parte inteira e fracionária:
+		li $t3, 100
+		div $t4, $t3
+		mflo $t1
+		mfhi $t2
+
+		#Apresentando valor do troco:
+		li $v0, 4
+		la $a0, msg3
 		syscall
 
 		li $v0, 1
