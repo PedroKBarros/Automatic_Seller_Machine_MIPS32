@@ -4,10 +4,12 @@ msg2:   .asciiz "Valor do produto selecionado R$"
 msg3:   .asciiz "Troco: R$"
 msg4:   .asciiz "Valor insuficiente para compra"
 pula:   .asciiz "\n"
+virgula:   .asciiz ","
 
 .text
         .globl main
 main:
+		#Carregando valores iniciais nos registradores $s0 a $s7 e $t9 para fim de testes:
 		li $s0, 1
 		li $s1, 1
 		li $s2, 1
@@ -19,7 +21,7 @@ main:
 		li $t9, 30
 		li $t3, 100
 		mult $t9, $t3
-		mflo $t9
+		mflo $t9 #O $t9 representa o valor do produto selecionado x 100
 
 		
 		#Calculando valor em reais de notas:
@@ -76,14 +78,31 @@ main:
 result:
 		#Fluxo para apresentação da saída padrão
 
-		li $t0, 0
+		li $t0, 0 #Carregando 0 no registrador $t0 para indicar que o valor inserido é suficiente para pagamento do produto selecionado
+		
+		#Convertendo o valor inserido para um valor com parte inteira e fracionária:
+		li $t3, 100
+		div $t1, $t3
+		mflo $t1
+		mfhi $t2
 
+		#Apresentando valor inserido:
 		li $v0, 4
 		la $a0, msg1
 		syscall
+
 		li $v0, 1
 		move $a0, $t1
 		syscall
+
+		li $v0, 4
+		la $a0, virgula
+		syscall
+
+		li $v0, 1
+		move $a0, $t2
+		syscall
+
 		j exit
 
 exception:
