@@ -6,11 +6,14 @@ Develop software for a product vending machine, whose hardware is based on MIPS 
 * The system should inform the machine's display of the amount of money inserted;
 * The system should inform on the machine's display the price of the selected product;
 * The system should inform on the machine's display the change value;
-* The system should calculate the quantity of each banknote and currency that must be provided as change, optimizing so that    the quantity of the banknote / currency is the minimum possible (always supply as much change as possible the highest amount of banknotes and coins).
+* The system should calculate the quantity of each banknote and currency that must be provided as change, optimizing so that    the quantity of the banknote / currency is the minimum possible (always supply as much change as possible the highest amount of banknotes and coins);
 * The system should display the output following the format:
-    Valor pago: R$XX,XX
-    Valor do produto selecionado: R$XX,XX
-    Troco: R$XX,XX
+
+Valor pago: R$XX,XX (Amount paid)
+
+Valor do produto selecionado: R$XX,XX (Value of selected product)
+
+Troco: R$XX,XX (Change)
 
 ## Assembly Specifications
 ### Number of Banknotes and Coins:
